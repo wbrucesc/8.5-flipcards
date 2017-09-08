@@ -1,1 +1,15 @@
-<h1> HOME PAGE </h1> 
+<h1 class="banner">Flipcards</h1>
+
+<div class="row">
+  <a class="button" href="#">Home</a>
+  <a class="button" href="/newDeck">Create a new deck</a>
+  <!-- <a class="button" href="/login">Log in</a> -->
+  <a class="button" href="/logout">Log out</a>
+</div>
+
+
+<h3>Choose a deck to be quizzed on:</h3>
+
+{{#each Deck}}
+<a href="#"><h3>{{name}}</h3></a>
+{{/each}}

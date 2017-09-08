@@ -3,10 +3,12 @@ const passport = require('passport');
 
 const HomeController = require('./controllers/home');
 const UserController = require('./controllers/user');
+const ApiController = require('./controllers/api');
 
 module.exports = function(app) {
  const homeRouter = express.Router();
  const userRouter = express.Router();
+ const apiRouter = express.Router();
 
  const requireLogin = function(req, res, next) {
    if (req.user) {
@@ -20,9 +22,14 @@ module.exports = function(app) {
 
 //Home
 homeRouter.use(requireLogin);
-homeRouter.get('/', HomeController.index);
+homeRouter.get('/', HomeController.index);            //shows list of user's decks
+homeRouter.get('/logout', HomeController.out);        //logs user out
+homeRouter.get('/newDeck', HomeController.form);      //add new deck
+homeRouter.post('/newDeck', HomeController.newDeck);  //creates new deck
 
-
+//Api
+apiRouter.get('/decks', ApiController.list);      //lists decks
+apiRouter.post('/decks', ApiController.add);      //create new deck 
 
 //User
 userRouter.get('/login', UserController.login);   //user prepended to / on all user routes
@@ -41,7 +48,7 @@ userRouter.post('/signup', passport.authenticate('local-signup', {
 
 
 
-
+app.use('/api', apiRouter);
 app.use('/', userRouter);
 app.use('/', homeRouter);
 };

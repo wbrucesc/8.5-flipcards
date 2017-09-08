@@ -5,17 +5,37 @@ const bCrypt = require('bcrypt-nodejs');
 const passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     session = require('express-session');
+// const BasicStrategy = require('passport-http').BasicStrategy;
 const routes = require('./routes');
-const models = require('./models'); 
+const models = require('./models');
 
 
 
 const app = express();
+app.use(bodyParser.json());
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 //Passport auth ------------------------------------------------
+
+// passport.use(new BasicStrategy(function(username, password, done){ //can access certain stuff if logged in
+//   models.User.findOne({
+//     where: {
+//       username: username
+//     }
+//   }).then(function(user){
+//     if (!user) {
+//       return done(null, false);                     //username doesn't exist in db
+//     } else if (user.password !== password) {
+//       return done(null, false);                     //username given but password doesn't match
+//     } else {
+//       return done(null, user);                      //username & password correct = allow login
+//     }
+//   });
+// }));
+
+//Passport Local
 
 const checkPassword = function(userpass, password){
   // return user.password === password;
